@@ -20,11 +20,13 @@ if(POLICY CMP0054)
 endif()
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "possible configurations" FORCE)
+set(CMAKE_BUILD_TYPE Release)
 
 # In case the user does not setup CMAKE_BUILD_TYPE, assume it's RelWithDebInfo
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
   set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "build type default to RelWithDebInfo, set to Release to improve performance" FORCE)
 endif("${CMAKE_BUILD_TYPE}" STREQUAL "")
+message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
 project(PCL)
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
@@ -414,6 +416,9 @@ if(WITH_OPENGL)
 endif(WITH_OPENGL)
 
 # Boost (required)
+if(VIBRANTE)
+    set(BOOST_ROOT "/opt/cross_compile/boost")
+endif()
 include("${PCL_SOURCE_DIR}/cmake/pcl_find_boost.cmake")
 
 ### ---[ Create the config.h file
